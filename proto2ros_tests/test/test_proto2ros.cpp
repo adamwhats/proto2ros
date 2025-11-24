@@ -456,8 +456,13 @@ TEST(Proto2RosTesting, MessagesWithOptionalFields) {
   auto ros_request_two_set = proto2ros_tests::msg::HVACControlRequest();
   Convert(proto_request, &ros_request_two_set);
 
-  EXPECT_GT(ros_request_one_set.has_field, ros_request_none_set.has_field);
-  EXPECT_GT(ros_request_two_set.has_field, ros_request_one_set.has_field);
+  EXPECT_EQ(ros_request_none_set.has_field, 0);
+  EXPECT_TRUE(ros_request_one_set.has_field &
+              ros_request_one_set.HUMIDITY_SETPOINT_FIELD_SET);
+  EXPECT_TRUE(ros_request_two_set.has_field &
+              ros_request_two_set.HUMIDITY_SETPOINT_FIELD_SET);
+  EXPECT_TRUE(ros_request_two_set.has_field &
+              ros_request_two_set.TEMPERATURE_SETPOINT_FIELD_SET);
 }
 
 TEST(Proto2RosTesting, MessagesWithAnyFields) {

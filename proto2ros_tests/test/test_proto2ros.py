@@ -315,8 +315,10 @@ def test_messages_with_optional_fields() -> None:
     ros_request_two_set = proto2ros_tests.msg.HVACControlRequest()
     convert(proto_request, ros_request_two_set)
 
-    assert ros_request_one_set.has_field > ros_request_none_set.has_field
-    assert ros_request_two_set.has_field > ros_request_one_set.has_field
+    assert ros_request_none_set.has_field == 0
+    assert ros_request_one_set.has_field & ros_request_one_set.HUMIDITY_SETPOINT_FIELD_SET
+    assert ros_request_two_set.has_field & ros_request_one_set.HUMIDITY_SETPOINT_FIELD_SET
+    assert ros_request_two_set.has_field & ros_request_one_set.TEMPERATURE_SETPOINT_FIELD_SET
 
 
 def test_messages_with_any_fields() -> None:
